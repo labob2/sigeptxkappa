@@ -1,7 +1,7 @@
 /* Confirmation page: verifies the Stripe payment via Apps Script before showing "registered" */
 (function () {
   'use strict';
-  var SCRIPT_URL = ''; // same Apps Script URL as golf-registration.js
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkz-9usy95-SHPOHU33SwZUxk0MTxKbgfPiRwzSTGq7yeqmOjw0MR3JJn6boWR7E9y4A/exec'; // same Apps Script URL as golf-registration.js
   var box = document.querySelector('[data-result]');
   if (!box) return;
 
