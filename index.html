@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sigma Phi Epsilon — Texas Kappa Chapter | UT Arlington</title>
+<meta name="description" content="The official home of the Texas Kappa Chapter of Sigma Phi Epsilon at the University of Texas at Arlington. Brotherhood, scholarship, and service since our founding.">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ NAVBAR ============ -->
+<header class="nav" data-nav>
+  <div class="container nav-inner">
+    <a class="brand" href="index.html" aria-label="Sigma Phi Epsilon, Texas Kappa — home">
+      <span class="brand-mark" aria-hidden="true"><img src="assets/img/logo-crest.png" alt=""></span>
+      <span class="brand-text">
+        <span class="brand-greek">ΣΦΕ</span>
+        <span class="brand-sub">Texas Kappa · UTA</span>
+      </span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html#about">About</a>
+      <a href="golf-tournament.html">Golf Tournament</a>
+      <a href="tri-state-tournament.html">Tri-State</a>
+      <a href="avc-board.html">AVC Board</a>
+      <a href="exec-board.html">Exec Board</a>
+      <a href="philanthropy.html">Philanthropy</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="icon-btn" data-open="[data-search-overlay]" aria-label="Open search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </button>
+      <div class="login-group">
+        <button class="btn btn-ghost btn-sm" data-open="[data-brother-modal]">Brother Login</button>
+        <button class="btn btn-gold btn-sm" data-open="[data-exec-modal]">Exec Login</button>
+      </div>
+      <button class="icon-btn menu-toggle" data-menu-toggle aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MOBILE DRAWER ============ -->
+<div class="mobile-drawer" id="mobile-drawer" data-drawer>
+  <nav aria-label="Mobile">
+    <a href="index.html#about">About</a>
+    <a href="golf-tournament.html">Golf Tournament</a>
+    <a href="tri-state-tournament.html">Tri-State</a>
+    <a href="avc-board.html">AVC Board</a>
+    <a href="exec-board.html">Exec Board</a>
+    <a href="philanthropy.html">Philanthropy</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="drawer-actions">
+    <button class="btn btn-ghost btn-block" data-open="[data-brother-modal]">Brother Login</button>
+    <button class="btn btn-gold btn-block" data-open="[data-exec-modal]">Exec Login</button>
+  </div>
+</div>
+
+<!-- ============ SEARCH OVERLAY ============ -->
+<div class="search-overlay" data-search-overlay aria-hidden="true" role="dialog" aria-modal="true" aria-label="Site search">
+  <div class="search-panel">
+    <div class="search-input-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" data-search-input placeholder="Search the chapter site…" aria-label="Search">
+      <button class="icon-btn" data-close aria-label="Close search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="search-results" data-search-results></div>
+    <div class="search-hint"><span><span class="kbd">↑↓</span> navigate</span><span><span class="kbd">Enter</span> select</span><span><span class="kbd">Esc</span> close</span></div>
+  </div>
+</div>
+
+<!-- ============ LOGIN MODALS (placeholder — future functionality) ============ -->
+<div class="modal-overlay" data-brother-modal aria-hidden="true" role="dialog" aria-modal="true" aria-label="Brother login">
+  <div class="modal-card">
+    <button class="icon-btn modal-close" data-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div>
+    <span class="modal-badge">Coming soon</span>
+    <h3>Brother Portal</h3>
+    <p>A private space for active brothers — event RSVPs, point tracking, and chapter docs. Login opens once the portal is built.</p>
+    <form data-portal-form>
+      <div class="field"><label for="brother-email">UTA email</label><input id="brother-email" type="email" placeholder="you@mavs.uta.edu" disabled></div>
+      <div class="field"><label for="brother-pass">Password</label><input id="brother-pass" type="password" placeholder="••••••••" disabled></div>
+      <button class="btn btn-primary btn-block" type="submit">Notify me when it's live</button>
+      <p class="form-status" data-form-status></p>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" data-exec-modal aria-hidden="true" role="dialog" aria-modal="true" aria-label="Exec board login">
+  <div class="modal-card">
+    <button class="icon-btn modal-close" data-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7l7-4z"/></svg></div>
+    <span class="modal-badge">Coming soon</span>
+    <h3>Exec Portal</h3>
+    <p>Admin tools for the executive board — content management, budgets, and reporting. Restricted to officers once live.</p>
+    <form data-portal-form>
+      <div class="field"><label for="exec-email">Officer email</label><input id="exec-email" type="email" placeholder="you@mavs.uta.edu" disabled></div>
+      <div class="field"><label for="exec-pass">Password</label><input id="exec-pass" type="password" placeholder="••••••••" disabled></div>
+      <button class="btn btn-primary btn-block" type="submit">Notify me when it's live</button>
+      <p class="form-status" data-form-status></p>
+    </form>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-media">
+      <video data-hero-video autoplay muted loop playsinline preload="auto" poster="assets/img/hero-3.jpg">
+        <source src="assets/video/bg-loop.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="container">
+        <span class="eyebrow">Texas Kappa Chapter · Est. at UT Arlington</span>
+        <h1 class="hero-title">SIGMA PHI<span class="line2">EPSILON</span></h1>
+        <p class="lede">Building balanced men through sound mind, sound body, and sound spirit — brotherhood, scholarship, and service at UT Arlington.</p>
+        <div class="hero-meta">
+          <span>University of Texas at Arlington</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span>705 S Davis Dr, Arlington, TX</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="philanthropy.html">Our Philanthropy</a>
+          <a class="btn btn-ghost" href="contact.html">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><span class="stick"></span></div>
+  </section>
+
+  <!-- ============ STAT STRIP ============ -->
+  <section class="stat-strip">
+    <div class="container">
+      <div class="stat-grid">
+        <div class="stat-item reveal">
+          <div class="stat-num">ΣΦΕ</div>
+          <div class="stat-label">Texas Kappa Chapter</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Cardinal Principles</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="stat-num">UTA</div>
+          <div class="stat-label">University of Texas at Arlington</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="stat-num">2026</div>
+          <div class="stat-label">Building the next chapter</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about">
+    <div class="container about-grid">
+      <div class="about-media reveal">
+        <img src="assets/img/hero-4.jpg" alt="Texas Kappa brothers posing with the Sigma Phi Epsilon chapter flag in front of the Acropolis in Athens, Greece." loading="lazy" width="1600" height="1200">
+        <span class="about-media-tag">Brotherhood beyond campus</span>
+        <span class="seal-badge" title="The Balanced Man Scholarship"><img src="assets/img/logo-balanced-man.png" alt="The Balanced Man Scholarship seal" loading="lazy"></span>
+      </div>
+      <div>
+        <span class="eyebrow">Who we are</span>
+        <h2 class="section-title">Sound mind.<br>Sound body.<br>Sound spirit.</h2>
+        <p class="lede">Texas Kappa is the Sigma Phi Epsilon chapter at the University of Texas at Arlington. We're built on the Balanced Man Ideal — developing brothers intellectually, physically, and spiritually through genuine friendship, sound learning, and moral compass.</p>
+        <div class="value-list">
+          <div class="value-item reveal">
+            <span class="value-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3l1.8 5.6H20l-4.6 3.3 1.8 5.6L12 14.2l-5.2 3.3 1.8-5.6L4 8.6h6.2z"/></svg></span>
+            <div><h4>Sound Learning</h4><p>Academic accountability and mentorship that keep scholarship at the center of chapter life.</p></div>
+          </div>
+          <div class="value-item reveal">
+            <span class="value-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 21s-7-4.4-9.5-9C.7 8 2 4.5 5.5 4a4.7 4.7 0 016.5 2 4.7 4.7 0 016.5-2C22 4.5 23.3 8 21.5 12 19 16.6 12 21 12 21z"/></svg></span>
+            <div><h4>Rightly Directed Friendship</h4><p>A lifelong brotherhood built on trust — on campus and long after graduation.</p></div>
+          </div>
+          <div class="value-item reveal">
+            <span class="value-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4.2 5-6.5 8-6.5s6.5 2.3 8 6.5"/></svg></span>
+            <div><h4>Moral Compass</h4><p>Leadership grounded in integrity, service, and accountability to each other and UTA.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROGRAMS / SUBPAGES ============ -->
+  <section class="section" id="programs">
+    <div class="container">
+      <div class="section-head split">
+        <div>
+          <span class="eyebrow">What we run</span>
+          <h2 class="section-title">Signature programs</h2>
+        </div>
+        <p class="lede mt-0">From the tournaments that fund our philanthropy to the boards that run the chapter — here's where to find it all.</p>
+      </div>
+
+      <div class="card-grid stagger-grid">
+        <a class="program-card" href="golf-tournament.html">
+          <img src="assets/img/hero-5.jpg" alt="" loading="lazy">
+          <span class="program-card-body">
+            <span class="eyebrow">Annual Event</span>
+            <h3>Golf Tournament</h3>
+            <p>Our annual fundraising tournament bringing brothers, alumni, and sponsors together on the course.</p>
+            <span class="program-card-cta">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+        <a class="program-card" href="tri-state-tournament.html">
+          <img src="assets/img/hero-1.jpg" alt="" loading="lazy">
+          <span class="program-card-body">
+            <span class="eyebrow">Regional Rivalry</span>
+            <h3>Tri-State Tournament</h3>
+            <p>Regional competition uniting SigEp chapters across state lines for a weekend of brotherhood and rivalry.</p>
+            <span class="program-card-cta">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+        <a class="program-card" href="avc-board.html">
+          <img src="assets/img/hero-2.jpg" alt="" loading="lazy">
+          <span class="program-card-body">
+            <span class="eyebrow">Alumni Volunteer Corp.</span>
+            <h3>AVC Board</h3>
+            <p>The alumni volunteers who guide, mentor, and support Texas Kappa from the outside in.</p>
+            <span class="program-card-cta">Meet the board <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+        <a class="program-card" href="exec-board.html">
+          <img src="assets/img/hero-3.jpg" alt="" loading="lazy">
+          <span class="program-card-body">
+            <span class="eyebrow">Chapter Leadership</span>
+            <h3>Exec Board</h3>
+            <p>The active brothers elected to lead Texas Kappa's operations, programming, and standards.</p>
+            <span class="program-card-cta">Meet the board <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PHILANTHROPY ============ -->
+  <section class="section philan-section">
+    <div class="container philan-grid">
+      <div>
+        <span class="eyebrow">Giving back</span>
+        <h2 class="section-title">Philanthropy</h2>
+        <p class="lede">Every year Texas Kappa raises funds and awareness for causes that matter to our brothers and our community — from campus fundraisers to national partnerships.</p>
+        <div class="philan-stats">
+          <div class="reveal"><div class="stat-num" style="font-size:2.2rem">Pie a SigEp</div><div class="stat-label">Breast Cancer Awareness fundraiser</div></div>
+        </div>
+        <a class="btn btn-primary" href="philanthropy.html">See our impact</a>
+      </div>
+      <div class="philan-media reveal">
+        <img src="assets/img/hero-3.jpg" alt="Two Texas Kappa brothers holding a hand-painted 'Pie a SigEp' sign to raise donations for breast cancer awareness on the UTA campus." loading="lazy" width="1350" height="2400">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section class="section" id="gallery">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Chapter life</span>
+        <h2 class="section-title">Moments from Texas Kappa</h2>
+      </div>
+      <div class="gallery-grid stagger-grid">
+        <div class="gallery-item wide"><img src="assets/img/hero-4.jpg" alt="Brothers with the SigEp flag at the Acropolis in Athens." loading="lazy"></div>
+        <div class="gallery-item"><img src="assets/img/hero-2.jpg" alt="Intramural champions holding the SigEp flag on the field at night." loading="lazy"></div>
+        <div class="gallery-item tall"><img src="assets/img/hero-1.jpg" alt="Brothers gathered on the intramural field holding a 'They not like us' sign." loading="lazy"></div>
+        <div class="gallery-item"><img src="assets/img/hero-3.jpg" alt="Philanthropy pie-in-the-face fundraiser on campus." loading="lazy"></div>
+        <div class="gallery-item"><img src="assets/img/hero-5.jpg" alt="Brothers holding the SigEp flag outside a chapter event." loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT BAND ============ -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="contact-band reveal">
+        <span class="eyebrow" style="color:var(--gold-300)">Rush Texas Kappa</span>
+        <h2>Interested in joining the brotherhood?</h2>
+        <p class="lede" style="color:rgba(255,255,255,0.85); max-width:56ch">Reach out to learn about recruitment, our chapter house, or upcoming events at UT Arlington.</p>
+        <div class="btn-row">
+          <a class="btn btn-gold" href="contact.html">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <img class="footer-watermark" src="assets/img/logo-sigep-letters.png" alt="" aria-hidden="true">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true"><img src="assets/img/logo-crest.png" alt=""></span>
+          <span class="brand-text">
+            <span class="brand-greek">ΣΦΕ</span>
+            <span class="brand-sub">Texas Kappa · UTA</span>
+          </span>
+        </a>
+        <p>The Texas Kappa Chapter of Sigma Phi Epsilon at the University of Texas at Arlington — brotherhood, scholarship, and service.</p>
+        <a class="footer-natl" href="https://sigep.org" target="_blank" rel="noopener noreferrer">
+          <img src="assets/img/logo-sigep-wordmark.png" alt="">
+          <span>Chapter of SigEp National</span>
+        </a>
+        <div class="social-row" aria-label="Sigma Phi Epsilon National social media">
+          <a class="social-btn" href="https://www.instagram.com/sigep/" target="_blank" rel="noopener noreferrer" aria-label="SigEp National on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          </a>
+          <a class="social-btn" href="https://twitter.com/SigEp" target="_blank" rel="noopener noreferrer" aria-label="SigEp National on X (Twitter)">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 3l7.2 9.4L4.4 21H7l5.4-6.4L17 21h3l-7.5-9.8L19.8 3h-2.6l-5 5.9L9 3H4z"/></svg>
+          </a>
+          <a class="social-btn" href="https://www.facebook.com/SigmaPhiEpsilon" target="_blank" rel="noopener noreferrer" aria-label="SigEp National on Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 8h2V4h-2a4 4 0 00-4 4v2H9v4h2v6h4v-6h2.5l.5-4H15V8z"/></svg>
+          </a>
+          <a class="social-btn" href="https://www.youtube.com/sigep" target="_blank" rel="noopener noreferrer" aria-label="SigEp National on YouTube">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="12" rx="4"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="golf-tournament.html">Golf Tournament</a></li>
+          <li><a href="tri-state-tournament.html">Tri-State Tournament</a></li>
+          <li><a href="avc-board.html">AVC Board</a></li>
+          <li><a href="exec-board.html">Exec Board</a></li>
+          <li><a href="philanthropy.html">Philanthropy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li class="footer-address-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11.5A7 7 0 105 9.5C5 14.7 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
+            <address>705 S Davis Dr<br>Arlington, TX 76013</address>
+          </li>
+          <li>Phone &amp; email coming soon</li>
+          <li><a href="contact.html">Contact form →</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span data-year></span> Sigma Phi Epsilon — Texas Kappa Chapter. All rights reserved.</span>
+      <span class="footer-legal">
+        <a href="index.html">Home</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://sigep.org" target="_blank" rel="noopener noreferrer">SigEp National</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

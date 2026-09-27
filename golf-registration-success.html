@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registration Confirmation | Sigma Phi Epsilon — Texas Kappa</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav" data-nav>
+  <div class="container nav-inner">
+    <a class="brand" href="index.html" aria-label="Sigma Phi Epsilon, Texas Kappa — home">
+      <span class="brand-mark" aria-hidden="true"><img src="assets/img/logo-crest.png" alt=""></span>
+      <span class="brand-text"><span class="brand-greek">ΣΦΕ</span><span class="brand-sub">Texas Kappa · UTA</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html#about">About</a>
+      <a href="golf-tournament.html">Golf Tournament</a>
+      <a href="tri-state-tournament.html">Tri-State</a>
+      <a href="avc-board.html">AVC Board</a>
+      <a href="exec-board.html">Exec Board</a>
+      <a href="philanthropy.html">Philanthropy</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" data-open="[data-search-overlay]" aria-label="Open search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </button>
+      <div class="login-group">
+        <button class="btn btn-ghost btn-sm" data-open="[data-brother-modal]">Brother Login</button>
+        <button class="btn btn-gold btn-sm" data-open="[data-exec-modal]">Exec Login</button>
+      </div>
+      <button class="icon-btn menu-toggle" data-menu-toggle aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-drawer" id="mobile-drawer" data-drawer>
+  <nav aria-label="Mobile">
+    <a href="index.html#about">About</a>
+    <a href="golf-tournament.html">Golf Tournament</a>
+    <a href="tri-state-tournament.html">Tri-State</a>
+    <a href="avc-board.html">AVC Board</a>
+    <a href="exec-board.html">Exec Board</a>
+    <a href="philanthropy.html">Philanthropy</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="drawer-actions">
+    <button class="btn btn-ghost btn-block" data-open="[data-brother-modal]">Brother Login</button>
+    <button class="btn btn-gold btn-block" data-open="[data-exec-modal]">Exec Login</button>
+  </div>
+</div>
+
+<div class="search-overlay" data-search-overlay aria-hidden="true" role="dialog" aria-modal="true" aria-label="Site search">
+  <div class="search-panel">
+    <div class="search-input-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" data-search-input placeholder="Search the chapter site…" aria-label="Search">
+      <button class="icon-btn" data-close aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="search-results" data-search-results></div>
+    <div class="search-hint"><span><span class="kbd">↑↓</span> navigate</span><span><span class="kbd">Enter</span> select</span><span><span class="kbd">Esc</span> close</span></div>
+  </div>
+</div>
+
+<div class="modal-overlay" data-brother-modal aria-hidden="true" role="dialog" aria-modal="true" aria-label="Brother login">
+  <div class="modal-card">
+    <button class="icon-btn modal-close" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div>
+    <span class="modal-badge">Coming soon</span>
+    <h3>Brother Portal</h3>
+    <p>A private space for active brothers — event RSVPs, point tracking, and chapter docs. Login opens once the portal is built.</p>
+    <form data-portal-form>
+      <div class="field"><label for="brother-email">UTA email</label><input id="brother-email" type="email" placeholder="you@mavs.uta.edu" disabled></div>
+      <div class="field"><label for="brother-pass">Password</label><input id="brother-pass" type="password" placeholder="••••••••" disabled></div>
+      <button class="btn btn-primary btn-block" type="submit">Notify me when it's live</button>
+      <p class="form-status" data-form-status></p>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" data-exec-modal aria-hidden="true" role="dialog" aria-modal="true" aria-label="Exec board login">
+  <div class="modal-card">
+    <button class="icon-btn modal-close" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7l7-4z"/></svg></div>
+    <span class="modal-badge">Coming soon</span>
+    <h3>Exec Portal</h3>
+    <p>Admin tools for the executive board — content management, budgets, and reporting. Restricted to officers once live.</p>
+    <form data-portal-form>
+      <div class="field"><label for="exec-email">Officer email</label><input id="exec-email" type="email" placeholder="you@mavs.uta.edu" disabled></div>
+      <div class="field"><label for="exec-pass">Password</label><input id="exec-pass" type="password" placeholder="••••••••" disabled></div>
+      <button class="btn btn-primary btn-block" type="submit">Notify me when it's live</button>
+      <p class="form-status" data-form-status></p>
+    </form>
+  </div>
+</div>
+
+<main id="main">
+  <section class="section" style="padding-top:160px;min-height:70vh">
+    <div class="container">
+      <div class="result-card" data-result aria-live="polite">
+        <h1>Confirming your payment…</h1>
+        <p class="lede">One moment while we verify it with Stripe.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <img class="footer-watermark" src="assets/img/logo-sigep-letters.png" alt="" aria-hidden="true">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true"><img src="assets/img/logo-crest.png" alt=""></span>
+          <span class="brand-text"><span class="brand-greek">ΣΦΕ</span><span class="brand-sub">Texas Kappa · UTA</span></span>
+        </a>
+        <p>The Texas Kappa Chapter of Sigma Phi Epsilon at the University of Texas at Arlington — brotherhood, scholarship, and service.</p>
+        <a class="footer-natl" href="https://sigep.org" target="_blank" rel="noopener noreferrer">
+          <img src="assets/img/logo-sigep-wordmark.png" alt="">
+          <span>Chapter of SigEp National</span>
+        </a>
+        <div class="social-row" aria-label="Sigma Phi Epsilon National social media">
+          <a class="social-btn" href="https://www.instagram.com/sigep/" target="_blank" rel="noopener noreferrer" aria-label="SigEp National on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg></a>
+          <a class="social-btn" href="https://twitter.com/SigEp" target="_blank" rel="noopener noreferrer" aria-label="SigEp National on X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 3l7.2 9.4L4.4 21H7l5.4-6.4L17 21h3l-7.5-9.8L19.8 3h-2.6l-5 5.9L9 3H4z"/></svg></a>
+          <a class="social-btn" href="https://www.facebook.com/SigmaPhiEpsilon" target="_blank" rel="noopener noreferrer" aria-label="SigEp National on Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 8h2V4h-2a4 4 0 00-4 4v2H9v4h2v6h4v-6h2.5l.5-4H15V8z"/></svg></a>
+          <a class="social-btn" href="https://www.youtube.com/sigep" target="_blank" rel="noopener noreferrer" aria-label="SigEp National on YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="12" rx="4"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="golf-tournament.html">Golf Tournament</a></li>
+          <li><a href="tri-state-tournament.html">Tri-State Tournament</a></li>
+          <li><a href="avc-board.html">AVC Board</a></li>
+          <li><a href="exec-board.html">Exec Board</a></li>
+          <li><a href="philanthropy.html">Philanthropy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li class="footer-address-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.3 7-11.5A7 7 0 105 9.5C5 14.7 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg><address>705 S Davis Dr<br>Arlington, TX 76013</address></li>
+          <li>Phone &amp; email coming soon</li>
+          <li><a href="contact.html">Contact form →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year></span> Sigma Phi Epsilon — Texas Kappa Chapter. All rights reserved.</span>
+      <span class="footer-legal"><a href="index.html">Home</a><a href="contact.html">Contact</a><a href="https://sigep.org" target="_blank" rel="noopener noreferrer">SigEp National</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/golf-success.js"></script>
+</body>
+</html>
