@@ -179,12 +179,15 @@
   if (contactForm) {
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
+      var f = contactForm.elements;
+      var subject = f['c-subject'].value.trim() || 'Message from the Texas Kappa website';
+      var body = 'Name: ' + f['c-name'].value.trim() + '\nEmail: ' + f['c-email'].value.trim() + '\n\n' + f['c-message'].value.trim();
       var status = contactForm.querySelector('[data-form-status]');
       if (status) {
-        status.textContent = 'Thanks for reaching out! This form isn’t wired to email yet — for now, please use the contact details listed here.';
+        status.textContent = 'Opening your email app with your message ready to send to sigep.texaskappa.uta@gmail.com. If nothing opens, please email us directly at that address.';
         status.classList.add('is-visible', 'success');
       }
-      contactForm.reset();
+      window.location.href = 'mailto:sigep.texaskappa.uta@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     });
   }
 
