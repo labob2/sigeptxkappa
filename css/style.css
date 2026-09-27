@@ -292,7 +292,8 @@ p.lede {
 .brand-mark img { height: 48px; width: auto; display: block; max-width: none; }
 .brand-mark svg { width: 26px; height: 26px; }
 .brand-text { display: flex; flex-direction: column; line-height: 1; }
-.brand-text .brand-greek { font-size: 1.5rem; color: #fff; }
+.brand-text .brand-greek { display: block; line-height: 0; }
+.brand-text .brand-greek img { height: 25px; width: auto; display: block; }
 .brand-text .brand-sub {
   font-family: var(--font-body);
   font-size: 10px;
