@@ -11,8 +11,8 @@
 const CONFIG = {
   EVENT_NAME: '40th Annual SigEp Golf Tournament',
   PRICES: {
-    individual: { cents: 40000, label: 'Individual Golfer' },
-    team: { cents: 150000, label: 'Team of 4 (Foursome)' }
+    individual: { cents: 13500, label: 'Individual Golfer' },
+    team: { cents: 40000, label: 'Team of 4 (Foursome)' }
   },
   REG_SHEET: 'Registrations',
   PENDING_SHEET: 'Pending'
