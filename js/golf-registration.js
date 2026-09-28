@@ -11,6 +11,9 @@
   if (!form) return;
 
   var teamFields = form.querySelector('[data-team-fields]');
+  var teamFieldsLegend = form.querySelector('[data-foursome-legend]');
+  var teamFieldsHint = form.querySelector('[data-foursome-hint]');
+  var foursomeReqStars = form.querySelectorAll('[data-foursome-req]');
   var sponsorFields = form.querySelector('[data-sponsor-fields]');
   var sponsorInterestField = form.querySelector('[data-sponsor-interest-field]');
   var statusEl = form.querySelector('[data-reg-status]');
@@ -19,6 +22,7 @@
   function money(n) { return '$' + n.toLocaleString('en-US'); }
   function type() { return form.elements.type.value; }
   function needsFoursome(t) { return t === 'team' || t === 'sponsor'; }
+  function foursomeRequired(t) { return t === 'team'; }
 
   function syncType() {
     var t = type();
@@ -26,6 +30,15 @@
     sponsorFields.hidden = t !== 'sponsor';
     sponsorInterestField.hidden = t === 'sponsor';
     submitBtn.textContent = 'Continue to payment · ' + money(PRICES[t]);
+
+    if (needsFoursome(t)) {
+      var optional = !foursomeRequired(t);
+      teamFieldsLegend.textContent = optional ? 'Your foursome (optional)' : 'Your foursome';
+      teamFieldsHint.textContent = optional
+        ? 'Bringing your own foursome? List them here — or leave this blank and we’ll follow up to fill your spots.'
+        : '';
+      foursomeReqStars.forEach(function (s) { s.hidden = optional; });
+    }
   }
 
   function setError(name, msg) {
@@ -46,7 +59,7 @@
       ['phone', function (v) { return v.replace(/\D/g, '').length >= 7 ? '' : 'Please enter a valid phone number.'; }],
       ['shirt', function (v) { return v ? '' : 'Please choose a shirt size.'; }]
     ];
-    if (needsFoursome(t)) {
+    if (foursomeRequired(t)) {
       ['player1', 'player2', 'player3'].forEach(function (n) {
         checks.push([n, function (v) { return v.trim() ? '' : 'Please enter this player’s name.'; }]);
       });
@@ -60,7 +73,7 @@
       setError(c[0], msg);
       if (msg && !first) first = form.elements[c[0]];
     });
-    ['player1', 'player2', 'player3'].forEach(function (n) { if (!needsFoursome(t)) setError(n, ''); });
+    ['player1', 'player2', 'player3'].forEach(function (n) { if (!foursomeRequired(t)) setError(n, ''); });
     if (t !== 'sponsor') setError('companyName', '');
     if (first) first.focus();
     return !first;

@@ -238,13 +238,14 @@
           </fieldset>
 
           <fieldset data-team-fields hidden>
-            <legend>Your foursome</legend>
+            <legend data-foursome-legend>Your foursome</legend>
+            <p class="hint" data-foursome-hint style="margin:-4px 0 var(--space-4)"></p>
             <div class="field"><label for="r-team">Team name</label><input class="field-input" id="r-team" name="teamName" type="text" maxlength="100"></div>
             <div class="form-row two">
-              <div class="field"><label for="r-p1">Player 2 <span class="req">*</span></label><input class="field-input" id="r-p1" name="player1" type="text" maxlength="100"><div class="field-error" id="r-p1-err"></div></div>
-              <div class="field"><label for="r-p2">Player 3 <span class="req">*</span></label><input class="field-input" id="r-p2" name="player2" type="text" maxlength="100"><div class="field-error" id="r-p2-err"></div></div>
+              <div class="field"><label for="r-p1">Player 2 <span class="req" data-foursome-req>*</span></label><input class="field-input" id="r-p1" name="player1" type="text" maxlength="100"><div class="field-error" id="r-p1-err"></div></div>
+              <div class="field"><label for="r-p2">Player 3 <span class="req" data-foursome-req>*</span></label><input class="field-input" id="r-p2" name="player2" type="text" maxlength="100"><div class="field-error" id="r-p2-err"></div></div>
             </div>
-            <div class="field"><label for="r-p3">Player 4 <span class="req">*</span></label><input class="field-input" id="r-p3" name="player3" type="text" maxlength="100"><div class="field-error" id="r-p3-err"></div></div>
+            <div class="field"><label for="r-p3">Player 4 <span class="req" data-foursome-req>*</span></label><input class="field-input" id="r-p3" name="player3" type="text" maxlength="100"><div class="field-error" id="r-p3-err"></div></div>
           </fieldset>
 
           <fieldset>
