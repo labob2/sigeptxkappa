@@ -30,6 +30,15 @@
       '<p class="text-muted">Check-in opens at 12:30 PM with a 2:00 PM shotgun start.</p>' + back);
   }
 
+  function processing(d) {
+    try { localStorage.removeItem('sigepGolfDraft'); } catch (e) {}
+    var noun = d.type === 'sponsor' ? 'sponsorship' : 'registration';
+    render(icon('<circle cx="12" cy="12" r="9"/><path d="M12 8v5l3 2"/>') +
+      '<h1>Payment processing…</h1>' +
+      '<p class="lede">Thanks! Your bank payment (ACH) is being processed. That typically takes 3–5 business days to clear — we’ll finish your ' + noun + ' automatically the moment it does, no need to do anything else. You can safely close this page.</p>' +
+      '<p class="text-muted">Questions in the meantime? Reach out through <a href="contact.html" class="link-underline" style="color:inherit">Contact Us</a>.</p>' + back);
+  }
+
   function fail(msg, retry) {
     render(icon('<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/>') +
       '<h1>' + esc(msg) + '</h1>' +
@@ -47,6 +56,7 @@
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (d.ok && d.status === 'paid') return paid(d);
+        if (d.ok && d.status === 'processing') return processing(d);
         if (d.ok && d.status === 'unpaid') {
           render(icon('<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/>') +
             '<h1>Payment not completed</h1><p class="lede">No charge was made and you aren’t registered yet. Your details are saved — head back to finish.</p>' +
