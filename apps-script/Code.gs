@@ -59,9 +59,9 @@ function createCheckout_(b) {
   if (!name) throw new Error('Name is required.');
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error('A valid email is required.');
   if (phone.replace(/\D/g, '').length < 7) throw new Error('A valid phone number is required.');
-  const needsFoursome = b.type === 'team' || b.type === 'sponsor';
+  const foursomeRequired = b.type === 'team';
   const players = (b.players || []).slice(0, 3).map(function (p) { return safe_(p, 100); }).filter(String);
-  if (needsFoursome && players.length < 3) throw new Error('List all 3 other players in your foursome.');
+  if (foursomeRequired && players.length < 3) throw new Error('List all 3 other players in your foursome.');
   const companyName = safe_(b.companyName, 100);
   if (b.type === 'sponsor' && !companyName) throw new Error('Company or organization name is required for sponsorships.');
 
@@ -71,6 +71,8 @@ function createCheckout_(b) {
     'success_url': siteUrl + '/golf-registration-success.html?session_id={CHECKOUT_SESSION_ID}',
     'cancel_url': siteUrl + '/golf-tournament.html#register',
     'customer_email': email,
+    'payment_method_types[0]': 'card',
+    'payment_method_types[1]': 'us_bank_account',
     'line_items[0][quantity]': '1',
     'line_items[0][price_data][currency]': 'usd',
     'line_items[0][price_data][unit_amount]': String(plan.cents),
@@ -90,7 +92,23 @@ function createCheckout_(b) {
 
 function confirmSession_(sessionId) {
   if (!/^cs_(test|live)_[A-Za-z0-9]+$/.test(sessionId || '')) throw new Error('Invalid session.');
-  const session = stripe_('get', '/v1/checkout/sessions/' + sessionId);
+  const session = stripe_('get', '/v1/checkout/sessions/' + sessionId + '?expand[]=payment_intent');
+  const pi = session.payment_intent; // expanded object, or null/string if not yet attached
+  const piStatus = pi && typeof pi === 'object' ? pi.status : null;
+
+  // ACH (and other bank-debit methods) settle over 3-5 business days: the PaymentIntent
+  // sits in "processing" the whole time before the Session's payment_status flips to "paid".
+  if (session.payment_status !== 'paid' && piStatus === 'processing') {
+    withLock_(function () {
+      const pend = getSheet_(CONFIG.PENDING_SHEET, COLUMNS);
+      const pRows = pend.getDataRange().getValues();
+      for (let i = 1; i < pRows.length; i++) {
+        if (pRows[i][1] === sessionId && pRows[i][2] === 'Pending') { pend.getRange(i + 1, 3).setValue('Processing'); break; }
+      }
+    });
+    return { ok: true, status: 'processing', type: (session.metadata || {}).type || '' };
+  }
+
   if (session.payment_status !== 'paid') return { ok: true, status: 'unpaid' };
 
   let result;
@@ -111,7 +129,7 @@ function confirmSession_(sessionId) {
         (session.metadata || {}).name || '', session.customer_email || '', '', '', '', '', '', '', '', '',
         (session.metadata || {}).companyName || ''];
       base[2] = 'Paid';
-      reg.appendRow(base.concat([new Date(), paidAmount, session.payment_intent || '']));
+      reg.appendRow(base.concat([new Date(), paidAmount, (piStatus ? pi.id : session.payment_intent) || '']));
     }
     if (pIdx > -1) pend.getRange(pIdx + 1, 3).setValue('Paid');
 
@@ -123,11 +141,14 @@ function confirmSession_(sessionId) {
   return result;
 }
 
-/** Time-driven: confirms anyone who paid but never reached the success page. */
+/**
+ * Time-driven: confirms anyone who paid but never reached the success page, and keeps
+ * checking back on ACH ("Processing") rows until they clear (or fail) days later.
+ */
 function reconcilePending() {
   const rows = getSheet_(CONFIG.PENDING_SHEET, COLUMNS).getDataRange().getValues();
   for (let i = 1; i < rows.length; i++) {
-    if (rows[i][2] !== 'Pending') continue;
+    if (rows[i][2] !== 'Pending' && rows[i][2] !== 'Processing') continue;
     try { confirmSession_(rows[i][1]); } catch (err) { console.error(rows[i][1], err); }
   }
 }
