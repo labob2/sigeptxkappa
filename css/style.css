@@ -927,21 +927,31 @@ p.lede {
 .two-col { display: grid; gap: var(--space-8); }
 @media (min-width: 960px) { .two-col { grid-template-columns: 1fr 0.8fr; } }
 
-.person-grid { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
-.person-card { text-align: left; }
+.person-grid { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.person-card {
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  transition: border-color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+.person-card:hover { border-color: var(--purple-500); background: var(--surface-strong); transform: translateY(-4px); }
 .person-avatar {
-  aspect-ratio: 1/1;
-  border-radius: var(--radius-md);
+  width: 64px; height: 64px;
+  border-radius: 50%;
   background: linear-gradient(150deg, var(--purple-800), var(--bg-elevated));
   border: 1px solid var(--border-strong);
   display: grid; place-items: center;
   color: var(--gold-500);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
   overflow: hidden;
+  flex-shrink: 0;
 }
-.person-avatar svg { width: 40%; height: 40%; opacity: 0.7; }
-.person-card h4 { font-weight: 700; font-size: 1rem; }
+.person-avatar svg { width: 44%; height: 44%; opacity: 0.7; }
+.person-card h4 { font-weight: 700; font-size: 1.05rem; }
 .person-card .role { color: var(--gold-500); font-size: 0.82rem; font-weight: 600; margin-top: 2px; }
+.person-bio { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-top: var(--space-3); }
 .person-card .placeholder-tag { color: var(--text-faint); font-size: 0.78rem; margin-top: 4px; }
 
 /* Contact page form */
