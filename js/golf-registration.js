@@ -127,6 +127,17 @@
   form.addEventListener('input', saveDraft);
   form.addEventListener('change', function (e) { if (e.target.name === 'type') syncType(); saveDraft(); });
 
+  /* "Sponsor Now" CTA above the form: pre-select the Sponsor option */
+  document.querySelectorAll('[data-select-sponsor]').forEach(function (cta) {
+    cta.addEventListener('click', function () {
+      var sponsorRadio = form.querySelector('input[name="type"][value="sponsor"]');
+      if (!sponsorRadio) return;
+      sponsorRadio.checked = true;
+      syncType();
+      saveDraft();
+    });
+  });
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     statusEl.className = 'form-status';
