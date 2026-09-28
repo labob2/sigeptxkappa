@@ -4,22 +4,27 @@
 
   // Paste the deployed Apps Script web-app URL here (ends in /exec).
   var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkz-9usy95-SHPOHU33SwZUxk0MTxKbgfPiRwzSTGq7yeqmOjw0MR3JJn6boWR7E9y4A/exec';
-  var PRICES = { individual: 135, team: 400 };
+  var PRICES = { individual: 135, team: 400, sponsor: 1500 };
   var DRAFT_KEY = 'sigepGolfDraft';
 
   var form = document.querySelector('[data-reg-form]');
   if (!form) return;
 
   var teamFields = form.querySelector('[data-team-fields]');
+  var sponsorFields = form.querySelector('[data-sponsor-fields]');
+  var sponsorInterestField = form.querySelector('[data-sponsor-interest-field]');
   var statusEl = form.querySelector('[data-reg-status]');
   var submitBtn = form.querySelector('[data-reg-submit]');
 
   function money(n) { return '$' + n.toLocaleString('en-US'); }
   function type() { return form.elements.type.value; }
+  function needsFoursome(t) { return t === 'team' || t === 'sponsor'; }
 
   function syncType() {
     var t = type();
-    teamFields.hidden = t !== 'team';
+    teamFields.hidden = !needsFoursome(t);
+    sponsorFields.hidden = t !== 'sponsor';
+    sponsorInterestField.hidden = t === 'sponsor';
     submitBtn.textContent = 'Continue to payment · ' + money(PRICES[t]);
   }
 
@@ -41,10 +46,13 @@
       ['phone', function (v) { return v.replace(/\D/g, '').length >= 7 ? '' : 'Please enter a valid phone number.'; }],
       ['shirt', function (v) { return v ? '' : 'Please choose a shirt size.'; }]
     ];
-    if (t === 'team') {
+    if (needsFoursome(t)) {
       ['player1', 'player2', 'player3'].forEach(function (n) {
         checks.push([n, function (v) { return v.trim() ? '' : 'Please enter this player’s name.'; }]);
       });
+    }
+    if (t === 'sponsor') {
+      checks.push(['companyName', function (v) { return v.trim() ? '' : 'Please enter your company or organization name.'; }]);
     }
     var first = null;
     checks.forEach(function (c) {
@@ -52,7 +60,8 @@
       setError(c[0], msg);
       if (msg && !first) first = form.elements[c[0]];
     });
-    ['player1', 'player2', 'player3'].forEach(function (n) { if (t !== 'team') setError(n, ''); });
+    ['player1', 'player2', 'player3'].forEach(function (n) { if (!needsFoursome(t)) setError(n, ''); });
+    if (t !== 'sponsor') setError('companyName', '');
     if (first) first.focus();
     return !first;
   }
@@ -68,8 +77,8 @@
       action: 'checkout',
       type: type(),
       name: f.name.value, email: f.email.value, phone: f.phone.value, shirt: f.shirt.value,
-      teamName: f.teamName.value,
-      players: type() === 'team' ? [f.player1.value, f.player2.value, f.player3.value] : [],
+      teamName: f.teamName.value, companyName: f.companyName.value,
+      players: needsFoursome(type()) ? [f.player1.value, f.player2.value, f.player3.value] : [],
       dietary: f.dietary.value, heard: f.heard.value, sponsor: f.sponsor.checked,
       comments: f.comments.value, website: f.website.value
     };

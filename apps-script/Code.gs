@@ -12,13 +12,14 @@ const CONFIG = {
   EVENT_NAME: '40th Annual SigEp Golf Tournament',
   PRICES: {
     individual: { cents: 13500, label: 'Individual Golfer' },
-    team: { cents: 40000, label: 'Team of 4 (Foursome)' }
+    team: { cents: 40000, label: 'Team of 4 (Foursome)' },
+    sponsor: { cents: 150000, label: 'Tournament Sponsor (includes a foursome)' }
   },
   REG_SHEET: 'Registrations',
   PENDING_SHEET: 'Pending'
 };
 const COLUMNS = ['Submitted', 'Stripe Session', 'Status', 'Type', 'Name', 'Email', 'Phone', 'Team Name',
-  'Other Players', 'Shirt Size', 'Dietary', 'Sponsor Interest', 'Heard About', 'Comments'];
+  'Other Players', 'Shirt Size', 'Dietary', 'Sponsor Interest', 'Heard About', 'Comments', 'Company Name'];
 const REG_EXTRA = ['Paid At', 'Amount Paid', 'Payment Intent'];
 
 /** Run once from the editor: creates both tabs and the 5-minute reconcile trigger. */
@@ -53,13 +54,16 @@ function doGet(e) {
 function createCheckout_(b) {
   if (b.website) return { ok: false, error: 'Rejected' }; // honeypot
   const plan = CONFIG.PRICES[b.type];
-  if (!plan) throw new Error('Choose individual or team registration.');
+  if (!plan) throw new Error('Choose individual, team, or sponsor registration.');
   const name = safe_(b.name, 100), email = safe_(b.email, 120), phone = safe_(b.phone, 30);
   if (!name) throw new Error('Name is required.');
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error('A valid email is required.');
   if (phone.replace(/\D/g, '').length < 7) throw new Error('A valid phone number is required.');
+  const needsFoursome = b.type === 'team' || b.type === 'sponsor';
   const players = (b.players || []).slice(0, 3).map(function (p) { return safe_(p, 100); }).filter(String);
-  if (b.type === 'team' && players.length < 3) throw new Error('List all 3 other team members.');
+  if (needsFoursome && players.length < 3) throw new Error('List all 3 other players in your foursome.');
+  const companyName = safe_(b.companyName, 100);
+  if (b.type === 'sponsor' && !companyName) throw new Error('Company or organization name is required for sponsorships.');
 
   const siteUrl = prop_('SITE_URL');
   const params = {
@@ -72,13 +76,14 @@ function createCheckout_(b) {
     'line_items[0][price_data][unit_amount]': String(plan.cents),
     'line_items[0][price_data][product_data][name]': CONFIG.EVENT_NAME + ' — ' + plan.label,
     'metadata[type]': b.type,
-    'metadata[name]': name
+    'metadata[name]': name,
+    'metadata[companyName]': companyName
   };
   const session = stripe_('post', '/v1/checkout/sessions', params);
 
   const row = [new Date(), session.id, 'Pending', b.type, name, email, phone, safe_(b.teamName, 100),
     players.join('; '), safe_(b.shirt, 10), safe_(b.dietary, 200), b.sponsor ? 'Yes' : 'No',
-    safe_(b.heard, 60), safe_(b.comments, 500)];
+    safe_(b.heard, 60), safe_(b.comments, 500), companyName];
   withLock_(function () { getSheet_(CONFIG.PENDING_SHEET, COLUMNS).appendRow(row); });
   return { ok: true, url: session.url };
 }
@@ -103,7 +108,8 @@ function confirmSession_(sessionId) {
 
     if (!already) {
       const base = src ? src.slice(0, COLUMNS.length) : [new Date(), sessionId, '', (session.metadata || {}).type || '',
-        (session.metadata || {}).name || '', session.customer_email || '', '', '', '', '', '', '', '', ''];
+        (session.metadata || {}).name || '', session.customer_email || '', '', '', '', '', '', '', '', '',
+        (session.metadata || {}).companyName || ''];
       base[2] = 'Paid';
       reg.appendRow(base.concat([new Date(), paidAmount, session.payment_intent || '']));
     }
@@ -111,7 +117,8 @@ function confirmSession_(sessionId) {
 
     const info = src || [];
     result = { ok: true, status: 'paid', name: info[4] || (session.metadata || {}).name || '',
-      type: info[3] || (session.metadata || {}).type || '', teamName: info[7] || '', amount: paidAmount };
+      type: info[3] || (session.metadata || {}).type || '', teamName: info[7] || '',
+      companyName: info[14] || (session.metadata || {}).companyName || '', amount: paidAmount };
   });
   return result;
 }

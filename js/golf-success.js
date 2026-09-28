@@ -14,11 +14,16 @@
 
   function paid(d) {
     try { localStorage.removeItem('sigepGolfDraft'); } catch (e) {}
-    var team = d.type === 'team';
+    var typeLabel = d.type === 'sponsor' ? 'Tournament Sponsor' : d.type === 'team' ? 'Team of 4' : 'Individual Golfer';
+    var heading = d.type === 'sponsor' ? 'You’re a sponsor!' : 'You’re registered!';
+    var thanksLine = d.type === 'sponsor'
+      ? 'Your payment went through and your sponsorship of the 40th Annual Golf Tournament is confirmed — including a foursome for your company. We’ll email you at the address you provided to collect your logo for the hole sign and website. Stripe is emailing you a receipt.'
+      : 'Your payment went through and your spot in the 40th Annual Golf Tournament is confirmed. Stripe is emailing you a receipt.';
     render(icon('<path d="M5 12l5 5 9-10"/>') +
-      '<h1>You’re registered!</h1>' +
-      '<p class="lede">Thank you' + (d.name ? ', ' + esc(d.name) : '') + '. Your payment went through and your spot in the 40th Annual Golf Tournament is confirmed. Stripe is emailing you a receipt.</p>' +
-      '<dl><dt>Registration</dt><dd>' + (team ? 'Team of 4' : 'Individual Golfer') + '</dd>' +
+      '<h1>' + heading + '</h1>' +
+      '<p class="lede">Thank you' + (d.name ? ', ' + esc(d.name) : '') + '. ' + thanksLine + '</p>' +
+      '<dl><dt>Registration</dt><dd>' + typeLabel + '</dd>' +
+      (d.companyName ? '<dt>Company</dt><dd>' + esc(d.companyName) + '</dd>' : '') +
       (d.teamName ? '<dt>Team</dt><dd>' + esc(d.teamName) + '</dd>' : '') +
       '<dt>Amount paid</dt><dd>$' + Number(d.amount).toLocaleString('en-US') + '</dd>' +
       '<dt>When</dt><dd>Saturday, November 14, 2026 · Iron Horse Golf Course</dd></dl>' +

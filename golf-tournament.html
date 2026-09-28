@@ -161,12 +161,25 @@
     </div>
   </section>
 
+  <section class="section section-photo" id="sponsorship" style="--photo:url(../assets/img/golf-hug.jpg);--photo-pos:center 30%">
+    <div class="container">
+      <div class="contact-band on-photo reveal">
+        <span class="eyebrow" style="color:var(--gold-300)">Every Contribution Counts</span>
+        <h2>Sponsor the 40th Annual Tournament</h2>
+        <p class="lede" style="color:rgba(255,255,255,0.85); max-width:56ch">For $1,500, sponsors receive a foursome (4 golfers, entry included), a company logo sign at a hole, your company logo on this website, and a two-minute speech at the closing dinner.</p>
+        <div class="btn-row">
+          <a class="btn btn-gold" href="#register">Sponsor Now — $1,500</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="register" style="padding-top:0">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Entry Fees</span>
         <h2 class="section-title" style="font-size:clamp(2rem,4vw,3rem)">Reserve your spot</h2>
-        <p class="lede">Register as an individual golfer or bring your own foursome — a team of four saves $140 compared with four individual registrations.</p>
+        <p class="lede">Register as an individual golfer, bring your own foursome, or become a tournament sponsor — a team of four saves $140 compared with four individual registrations.</p>
       </div>
 
       <div class="price-grid stagger-grid">
@@ -180,6 +193,11 @@
           <h3>Team of 4 (Foursome)</h3>
           <div class="amount">$400 <span>/ team</span></div>
           <p class="detail">Register your full foursome together. Includes greens fees, carts, and post-tournament reception &amp; dinner for all 4 players.</p>
+        </div>
+        <div class="price-card reveal">
+          <h3>Tournament Sponsor</h3>
+          <div class="amount">$1,500</div>
+          <p class="detail">Includes a foursome (4 golfers), a company logo sign at a hole, your logo on this website, and a two-minute speech at the closing dinner.</p>
         </div>
       </div>
 
@@ -196,6 +214,7 @@
             <div class="type-options" role="radiogroup" aria-label="Registration type">
               <label class="type-option"><input type="radio" name="type" value="individual" checked><span class="tile"><strong>Individual Golfer</strong><span>$135</span><small>We'll place you on a team</small></span></label>
               <label class="type-option"><input type="radio" name="type" value="team"><span class="tile"><strong>Team of 4</strong><span>$400</span><small>Save $140 vs. 4 individuals</small></span></label>
+              <label class="type-option"><input type="radio" name="type" value="sponsor"><span class="tile"><strong>Tournament Sponsor</strong><span>$1,500</span><small>Includes a foursome + perks</small></span></label>
             </div>
           </fieldset>
 
@@ -213,8 +232,13 @@
             </div>
           </fieldset>
 
+          <fieldset data-sponsor-fields hidden>
+            <legend>Your company</legend>
+            <div class="field"><label for="r-company">Company / organization name <span class="req">*</span></label><input class="field-input" id="r-company" name="companyName" type="text" maxlength="100"><div class="field-error" id="r-company-err"></div><div class="hint">Used for the hole sign and website. We'll email you at the address above to collect your logo file.</div></div>
+          </fieldset>
+
           <fieldset data-team-fields hidden>
-            <legend>Your team</legend>
+            <legend>Your foursome</legend>
             <div class="field"><label for="r-team">Team name</label><input class="field-input" id="r-team" name="teamName" type="text" maxlength="100"></div>
             <div class="form-row two">
               <div class="field"><label for="r-p1">Player 2 <span class="req">*</span></label><input class="field-input" id="r-p1" name="player1" type="text" maxlength="100"><div class="field-error" id="r-p1-err"></div></div>
@@ -228,7 +252,7 @@
             <div class="field"><label for="r-diet">Dietary restrictions or allergies</label><input class="field-input" id="r-diet" name="dietary" type="text" maxlength="200"><div class="hint">For the post-tournament dinner.</div></div>
             <div class="field"><label for="r-heard">How did you hear about us?</label>
               <select class="field-input" id="r-heard" name="heard"><option value="">Select…</option><option>SigEp Brother</option><option>Alumni Network</option><option>Social Media</option><option>Friend or Family</option><option>Other</option></select></div>
-            <div class="field"><label class="check-row"><input type="checkbox" name="sponsor"><span>I'm interested in sponsoring the tournament — please contact me.</span></label></div>
+            <div class="field" data-sponsor-interest-field><label class="check-row"><input type="checkbox" name="sponsor"><span>I'm interested in sponsoring the tournament — please contact me.</span></label></div>
             <div class="field"><label for="r-comments">Additional comments</label><textarea class="field-input" id="r-comments" name="comments" rows="3" maxlength="500"></textarea></div>
           </fieldset>
 
@@ -250,7 +274,7 @@
           <li><strong>Within 7 days of the tournament:</strong> we&rsquo;ll refund your registration (minus the processing fee) or transfer your spot to another golfer, whichever you prefer, depending on whether the spot can be filled or your circumstances make attending impossible.</li>
           <li><strong>Unable to play for any other reason, at any time?</strong> Contact us &mdash; we&rsquo;ll work with you.</li>
         </ul>
-        <p><strong>Processing fee:</strong> our payment processor keeps its fee when a payment is refunded, so refunds are for the amount paid minus that fee (2.9% + $0.30 per payment). That means a refund of <strong>$130.78</strong> for an individual registration ($135) or <strong>$388.10</strong> for a team registration ($400).</p>
+        <p><strong>Processing fee:</strong> our payment processor keeps its fee when a payment is refunded, so refunds are for the amount paid minus that fee (2.9% + $0.30 per payment). That means a refund of <strong>$130.78</strong> for an individual registration ($135), <strong>$388.10</strong> for a team registration ($400), or <strong>$1,456.20</strong> for a sponsorship ($1,500).</p>
         <p>If we cancel or reschedule the tournament (for example, because of weather), you can choose a full refund of the amount you paid, or keep your registration for the new date.</p>
         <p>To request a refund or transfer, email <a href="mailto:sigep.texaskappa.uta@gmail.com">sigep.texaskappa.uta@gmail.com</a> or call Chapter President Jason Del Angel at <a href="tel:+14697353826">(469) 735-3826</a> with the name on the registration. Refunds go back to the original payment method within 5 to 10 business days.</p>
       </div>
@@ -320,18 +344,6 @@
     </div>
   </section>
 
-  <section class="section section-photo" id="sponsorship" style="--photo:url(../assets/img/golf-hug.jpg);--photo-pos:center 30%">
-    <div class="container">
-      <div class="contact-band on-photo reveal">
-        <span class="eyebrow" style="color:var(--gold-300)">Every Contribution Counts</span>
-        <h2>Sponsor the 40th Annual Tournament</h2>
-        <p class="lede" style="color:rgba(255,255,255,0.85); max-width:56ch">Sponsors receive a foursome, a company logo sign at a hole, your company logo on this website, and a two-minute speech at the closing dinner. Reach out for current sponsorship tiers and pricing.</p>
-        <div class="btn-row">
-          <a class="btn btn-gold" href="contact.html">Become a Sponsor</a>
-        </div>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer class="site-footer">
