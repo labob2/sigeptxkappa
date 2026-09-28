@@ -4,7 +4,7 @@
 
   // Paste the deployed Apps Script web-app URL here (ends in /exec).
   var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkz-9usy95-SHPOHU33SwZUxk0MTxKbgfPiRwzSTGq7yeqmOjw0MR3JJn6boWR7E9y4A/exec';
-  var PRICES = { individual: 135, team: 400, sponsor: 1500 };
+  var PRICES = { individual: 1, team: 1, sponsor: 1 }; // TEMP TEST PRICING — revert to 135/400/1500!
   var DRAFT_KEY = 'sigepGolfDraft';
 
   var form = document.querySelector('[data-reg-form]');

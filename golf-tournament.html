@@ -179,24 +179,30 @@
       <div class="section-head">
         <span class="eyebrow">Entry Fees</span>
         <h2 class="section-title" style="font-size:clamp(2rem,4vw,3rem)">Reserve your spot</h2>
-        <p class="lede">Register as an individual golfer, bring your own foursome, or become a tournament sponsor — a team of four saves $140 compared with four individual registrations.</p>
+        <p class="lede">Register as an individual golfer, bring your own foursome, or become a tournament sponsor.</p>
+      </div>
+
+      <!-- TEMP TEST PRICING — revert to $135 / $400 / $1,500 (see comments) before real registrations open! -->
+      <div class="coming-soon-banner reveal" style="margin-bottom:var(--space-6)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5l3 2"/></svg>
+        <span><strong style="color:inherit">Payment testing in progress</strong> — every option below is temporarily $1 so we can verify checkout. Real pricing returns shortly.</span>
       </div>
 
       <div class="price-grid stagger-grid">
         <div class="price-card reveal">
           <h3>Individual Golfer</h3>
-          <div class="amount">$135</div>
+          <div class="amount">$1</div> <!-- real: $135 -->
           <p class="detail">Placed on a team with other individual registrants. Includes greens fee, cart, and post-tournament reception &amp; dinner.</p>
         </div>
         <div class="price-card is-featured reveal">
-          <span class="save-badge">Save $140</span>
+          <span class="save-badge">Test</span>
           <h3>Team of 4 (Foursome)</h3>
-          <div class="amount">$400 <span>/ team</span></div>
+          <div class="amount">$1 <span>/ team</span></div> <!-- real: $400 -->
           <p class="detail">Register your full foursome together. Includes greens fees, carts, and post-tournament reception &amp; dinner for all 4 players.</p>
         </div>
         <div class="price-card reveal">
           <h3>Tournament Sponsor</h3>
-          <div class="amount">$1,500</div>
+          <div class="amount">$1</div> <!-- real: $1,500 -->
           <p class="detail">Includes a foursome (4 golfers), a company logo sign at a hole, your logo on this website, and a two-minute speech at the closing dinner.</p>
         </div>
       </div>
@@ -212,9 +218,9 @@
           <fieldset>
             <legend>Registration type</legend>
             <div class="type-options" role="radiogroup" aria-label="Registration type">
-              <label class="type-option"><input type="radio" name="type" value="individual" checked><span class="tile"><strong>Individual Golfer</strong><span>$135</span><small>We'll place you on a team</small></span></label>
-              <label class="type-option"><input type="radio" name="type" value="team"><span class="tile"><strong>Team of 4</strong><span>$400</span><small>Save $140 vs. 4 individuals</small></span></label>
-              <label class="type-option"><input type="radio" name="type" value="sponsor"><span class="tile"><strong>Tournament Sponsor</strong><span>$1,500</span><small>Includes a foursome + perks</small></span></label>
+              <label class="type-option"><input type="radio" name="type" value="individual" checked><span class="tile"><strong>Individual Golfer</strong><span>$1</span><small>Test price</small></span></label>
+              <label class="type-option"><input type="radio" name="type" value="team"><span class="tile"><strong>Team of 4</strong><span>$1</span><small>Test price</small></span></label>
+              <label class="type-option"><input type="radio" name="type" value="sponsor"><span class="tile"><strong>Tournament Sponsor</strong><span>$1</span><small>Test price</small></span></label>
             </div>
           </fieldset>
 
@@ -260,7 +266,8 @@
 
           <div class="reg-submit">
             <p class="form-status" data-reg-status role="alert"></p>
-            <button class="btn btn-primary" type="submit" data-reg-submit>Continue to payment · $135</button>
+            <button class="btn btn-primary" type="submit" data-reg-submit>Continue to payment · $1</button> <!-- real: $135 -->
+
             <p class="fine">You won't be registered until payment completes. Payments are processed securely by Stripe — we never see your card details.</p>
           </div>
         </form>
