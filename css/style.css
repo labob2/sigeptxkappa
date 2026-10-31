@@ -800,6 +800,15 @@ p.lede {
 .contact-band h2 { color: #fff; font-size: clamp(2rem, 5vw, 3.4rem); }
 .contact-band .btn-row { display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; }
 
+/* Sponsor logos */
+.sponsor-strip { width: 100%; margin-top: var(--space-5); padding-top: var(--space-5); border-top: 1px solid rgba(255,255,255,0.18); display: flex; flex-direction: column; align-items: center; gap: var(--space-4); }
+.sponsor-strip-label { font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-300); }
+.sponsor-logos { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-4); }
+.sponsor-logo { display: flex; align-items: center; justify-content: center; width: 220px; height: 120px; padding: var(--space-4) var(--space-5); background: #fff; border-radius: var(--radius-md); box-shadow: 0 8px 24px rgba(0,0,0,0.25); transition: transform .2s ease, box-shadow .2s ease; }
+.sponsor-logo:hover, .sponsor-logo:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
+.sponsor-logo img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+@media (max-width: 480px) { .sponsor-logo { width: 180px; height: 100px; } }
+
 /* =========================================================
    FOOTER
    ========================================================= */
