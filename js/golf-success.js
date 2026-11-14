@@ -13,7 +13,15 @@
   var back = '<a class="btn btn-ghost" href="golf-tournament.html">Back to the tournament page</a>';
 
   function paid(d) {
-    try { localStorage.removeItem('sigepGolfDraft'); } catch (e) {}
+    try { localStorage.removeItem('sigepGolfDraft'); localStorage.removeItem('sigepGolfDonationDraft'); } catch (e) {}
+    if (d.type === 'donation') {
+      render(icon('<path d="M5 12l5 5 9-10"/>') +
+        '<h1>Thank you!</h1>' +
+        '<p class="lede">' + (d.name ? esc(d.name) + ', your' : 'Your') + ' gift to Texas Kappa has been received. Thank you for supporting leadership development and scholarships for our brothers.</p>' +
+        '<dl><dt>Gift</dt><dd>$' + Number(d.amount).toLocaleString('en-US', { minimumFractionDigits: Number(d.amount) % 1 ? 2 : 0, maximumFractionDigits: 2 }) + '</dd>' +
+        '<dt>Supporting</dt><dd>The 40th Annual SigEp Golf Tournament</dd></dl>' + back);
+      return;
+    }
     var typeLabel = d.type === 'sponsor' ? 'Tournament Sponsor' : d.type === 'team' ? 'Team of 4' : 'Individual Golfer';
     var heading = d.type === 'sponsor' ? 'You’re a sponsor!' : 'You’re registered!';
     var thanksLine = d.type === 'sponsor'
@@ -31,8 +39,8 @@
   }
 
   function processing(d) {
-    try { localStorage.removeItem('sigepGolfDraft'); } catch (e) {}
-    var noun = d.type === 'sponsor' ? 'sponsorship' : 'registration';
+    try { localStorage.removeItem('sigepGolfDraft'); localStorage.removeItem('sigepGolfDonationDraft'); } catch (e) {}
+    var noun = d.type === 'donation' ? 'gift' : d.type === 'sponsor' ? 'sponsorship' : 'registration';
     render(icon('<circle cx="12" cy="12" r="9"/><path d="M12 8v5l3 2"/>') +
       '<h1>Payment processing…</h1>' +
       '<p class="lede">Thanks! Your bank payment (ACH) is being processed. That typically takes 3–5 business days to clear — we’ll finish your ' + noun + ' automatically the moment it does, no need to do anything else. You can safely close this page.</p>' +
@@ -58,9 +66,10 @@
         if (d.ok && d.status === 'paid') return paid(d);
         if (d.ok && d.status === 'processing') return processing(d);
         if (d.ok && d.status === 'unpaid') {
+          var gift = d.type === 'donation';
           render(icon('<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/>') +
-            '<h1>Payment not completed</h1><p class="lede">No charge was made and you aren’t registered yet. Your details are saved — head back to finish.</p>' +
-            '<a class="btn btn-primary" href="golf-tournament.html#register">Return to registration</a>');
+            '<h1>Payment not completed</h1><p class="lede">' + (gift ? 'No charge was made. Your details are saved — head back whenever you’re ready to give.' : 'No charge was made and you aren’t registered yet. Your details are saved — head back to finish.') + '</p>' +
+            '<a class="btn btn-primary" href="golf-tournament.html#' + (gift ? 'donate' : 'register') + '">' + (gift ? 'Return to donate' : 'Return to registration') + '</a>');
           return;
         }
         throw new Error(d.error || 'unknown');

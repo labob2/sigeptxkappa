@@ -1177,3 +1177,18 @@ select.field-input option { background: #131019; color: var(--text); }
 .policy ul { margin: var(--space-3) 0 0; padding-left: var(--space-5); list-style: disc; display: grid; gap: var(--space-2); }
 .policy strong { color: var(--text); }
 .policy a { color: var(--gold-300); text-decoration: underline; }
+
+/* Donation form */
+.amount-chips { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-4); }
+.chip {
+  min-height: 44px; padding: 10px 20px;
+  border: 1px solid var(--border-strong); border-radius: var(--radius-full);
+  background: var(--surface); color: var(--text);
+  font-weight: 700; font-size: 0.95rem; cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.chip:hover { border-color: var(--gold-500); }
+.chip[aria-pressed="true"] { border-color: var(--gold-500); background: rgba(201,162,39,0.16); color: var(--gold-300); }
+.amount-field { position: relative; }
+.amount-field > span { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-weight: 700; pointer-events: none; }
+.amount-field input { padding-left: 32px; font-size: 1.15rem; font-weight: 700; }

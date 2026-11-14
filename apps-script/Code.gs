@@ -1,8 +1,9 @@
 /**
  * SigEp Texas Kappa — Golf Tournament registration backend (Google Apps Script)
  *
- * Flow: site form -> doPost(checkout) creates a Stripe Checkout Session and logs a "Pending" row
- *       -> Stripe hosted payment -> success page calls doGet(confirm) -> paid rows are moved to "Registrations".
+ * Flow: site form -> doPost(donate | checkout) creates a Stripe Checkout Session and logs a "Pending" row
+ *       -> Stripe hosted payment -> success page calls doGet(confirm) -> paid rows are finalized
+ *       (donations stay in the "Donations" sheet; registrations move to "Registrations").
  * A 5-minute trigger (reconcilePending) also confirms anyone who paid but closed the tab.
  * Prices are set HERE (never trusted from the browser). The Stripe secret key lives in Script Properties only.
  *
@@ -16,16 +17,22 @@ const CONFIG = {
     sponsor: { cents: 150000, label: 'Tournament Sponsor (includes a foursome)' }
   },
   REG_SHEET: 'Registrations',
-  PENDING_SHEET: 'Pending'
+  PENDING_SHEET: 'Pending',
+  DONATION_SHEET: 'Donations',
+  REGISTRATION_OPEN: false, // the golf page is donation-only now; set true to accept registrations again
+  DONATION_MIN_CENTS: 100,       // $1
+  DONATION_MAX_CENTS: 10000000   // $100,000
 };
 const COLUMNS = ['Submitted', 'Stripe Session', 'Status', 'Type', 'Name', 'Email', 'Phone', 'Team Name',
   'Other Players', 'Shirt Size', 'Dietary', 'Sponsor Interest', 'Heard About', 'Comments', 'Company Name'];
 const REG_EXTRA = ['Paid At', 'Amount Paid', 'Payment Intent'];
+const DONATION_COLUMNS = ['Submitted', 'Stripe Session', 'Status', 'Name', 'Phone', 'Email', 'Note', 'Amount', 'Paid At', 'Payment Intent'];
 
 /** Run once from the editor: creates both tabs and the 5-minute reconcile trigger. */
 function setup() {
   getSheet_(CONFIG.PENDING_SHEET, COLUMNS);
   getSheet_(CONFIG.REG_SHEET, COLUMNS.concat(REG_EXTRA));
+  getSheet_(CONFIG.DONATION_SHEET, DONATION_COLUMNS);
   ScriptApp.getProjectTriggers().forEach(function (t) {
     if (t.getHandlerFunction() === 'reconcilePending') ScriptApp.deleteTrigger(t);
   });
@@ -35,6 +42,7 @@ function setup() {
 function doPost(e) {
   try {
     const body = JSON.parse(e.postData.contents);
+    if (body.action === 'donate') return json_(createDonation_(body));
     if (body.action === 'checkout') return json_(createCheckout_(body));
     return json_({ ok: false, error: 'Unknown action' });
   } catch (err) {
@@ -52,6 +60,7 @@ function doGet(e) {
 }
 
 function createCheckout_(b) {
+  if (!CONFIG.REGISTRATION_OPEN) throw new Error('Online registration is closed. You can still make a donation on the tournament page.');
   if (b.website) return { ok: false, error: 'Rejected' }; // honeypot
   const plan = CONFIG.PRICES[b.type];
   if (!plan) throw new Error('Choose individual, team, or sponsor registration.');
@@ -90,11 +99,55 @@ function createCheckout_(b) {
   return { ok: true, url: session.url };
 }
 
+function createDonation_(b) {
+  if (b.website) return { ok: false, error: 'Rejected' }; // honeypot
+  const amountStr = String(b.amount == null ? '' : b.amount).replace(/[$,\s]/g, '');
+  if (!/^\d{1,6}(\.\d{1,2})?$/.test(amountStr)) throw new Error('Enter a valid donation amount.');
+  const cents = Math.round(parseFloat(amountStr) * 100);
+  if (cents < CONFIG.DONATION_MIN_CENTS || cents > CONFIG.DONATION_MAX_CENTS) throw new Error('Donations can be between $1 and $100,000.');
+  const name = safe_(b.name, 100), phone = safe_(b.phone, 30), note = safe_(b.note, 500);
+  if (!name) throw new Error('Name is required.');
+  if (phone.replace(/\D/g, '').length < 7) throw new Error('A valid phone number is required.');
+
+  const siteUrl = prop_('SITE_URL');
+  const params = {
+    'mode': 'payment',
+    'submit_type': 'donate',
+    'success_url': siteUrl + '/golf-registration-success.html?session_id={CHECKOUT_SESSION_ID}',
+    'cancel_url': siteUrl + '/golf-tournament.html#donate',
+    'payment_method_types[0]': 'card',
+    'payment_method_types[1]': 'us_bank_account',
+    'line_items[0][quantity]': '1',
+    'line_items[0][price_data][currency]': 'usd',
+    'line_items[0][price_data][unit_amount]': String(cents),
+    'line_items[0][price_data][product_data][name]': 'Donation — Texas Kappa Chapter of Sigma Phi Epsilon (' + CONFIG.EVENT_NAME + ')',
+    'metadata[type]': 'donation',
+    'metadata[name]': name,
+    'metadata[phone]': phone,
+    'metadata[note]': note.slice(0, 450)
+  };
+  let session;
+  try {
+    session = stripe_('post', '/v1/checkout/sessions', params);
+  } catch (err) {
+    // Bank transfers (ACH) not switched on in this Stripe account yet: fall back to card-only checkout.
+    if (!/payment method type|us_bank_account/i.test(String(err.message || err))) throw err;
+    delete params['payment_method_types[1]'];
+    session = stripe_('post', '/v1/checkout/sessions', params);
+  }
+
+  const row = [new Date(), session.id, 'Pending', name, phone, '', note, cents / 100, '', ''];
+  withLock_(function () { getSheet_(CONFIG.DONATION_SHEET, DONATION_COLUMNS).appendRow(row); });
+  return { ok: true, url: session.url };
+}
+
 function confirmSession_(sessionId) {
   if (!/^cs_(test|live)_[A-Za-z0-9]+$/.test(sessionId || '')) throw new Error('Invalid session.');
   const session = stripe_('get', '/v1/checkout/sessions/' + sessionId + '?expand[]=payment_intent');
   const pi = session.payment_intent; // expanded object, or null/string if not yet attached
   const piStatus = pi && typeof pi === 'object' ? pi.status : null;
+
+  if ((session.metadata || {}).type === 'donation') return confirmDonation_(sessionId, session, pi, piStatus);
 
   // ACH (and other bank-debit methods) settle over 3-5 business days: the PaymentIntent
   // sits in "processing" the whole time before the Session's payment_status flips to "paid".
@@ -141,16 +194,55 @@ function confirmSession_(sessionId) {
   return result;
 }
 
+function confirmDonation_(sessionId, session, pi, piStatus) {
+  if (session.payment_status !== 'paid' && piStatus === 'processing') {
+    withLock_(function () {
+      const sh = getSheet_(CONFIG.DONATION_SHEET, DONATION_COLUMNS);
+      const rows = sh.getDataRange().getValues();
+      for (let i = 1; i < rows.length; i++) {
+        if (rows[i][1] === sessionId && rows[i][2] === 'Pending') { sh.getRange(i + 1, 3).setValue('Processing'); break; }
+      }
+    });
+    return { ok: true, status: 'processing', type: 'donation' };
+  }
+  if (session.payment_status !== 'paid') return { ok: true, status: 'unpaid', type: 'donation' };
+
+  const meta = session.metadata || {};
+  const amount = session.amount_total / 100;
+  const email = safe_((session.customer_details && session.customer_details.email) || session.customer_email || '', 120);
+  const piId = (piStatus ? pi.id : session.payment_intent) || '';
+  let name = meta.name || '';
+  withLock_(function () {
+    const sh = getSheet_(CONFIG.DONATION_SHEET, DONATION_COLUMNS);
+    const rows = sh.getDataRange().getValues();
+    let idx = -1;
+    for (let i = 1; i < rows.length; i++) if (rows[i][1] === sessionId) { idx = i; break; }
+    if (idx === -1) {
+      sh.appendRow([new Date(), sessionId, 'Paid', meta.name || '', meta.phone || '', email, meta.note || '', amount, new Date(), piId]);
+    } else {
+      name = rows[idx][3] || name;
+      if (rows[idx][2] !== 'Paid') {
+        sh.getRange(idx + 1, 3).setValue('Paid');
+        sh.getRange(idx + 1, 6).setValue(email);
+        sh.getRange(idx + 1, 8, 1, 3).setValues([[amount, new Date(), piId]]);
+      }
+    }
+  });
+  return { ok: true, status: 'paid', type: 'donation', name: name, amount: amount };
+}
+
 /**
  * Time-driven: confirms anyone who paid but never reached the success page, and keeps
  * checking back on ACH ("Processing") rows until they clear (or fail) days later.
  */
 function reconcilePending() {
-  const rows = getSheet_(CONFIG.PENDING_SHEET, COLUMNS).getDataRange().getValues();
-  for (let i = 1; i < rows.length; i++) {
-    if (rows[i][2] !== 'Pending' && rows[i][2] !== 'Processing') continue;
-    try { confirmSession_(rows[i][1]); } catch (err) { console.error(rows[i][1], err); }
-  }
+  [[CONFIG.PENDING_SHEET, COLUMNS], [CONFIG.DONATION_SHEET, DONATION_COLUMNS]].forEach(function (pair) {
+    const rows = getSheet_(pair[0], pair[1]).getDataRange().getValues();
+    for (let i = 1; i < rows.length; i++) {
+      if (rows[i][2] !== 'Pending' && rows[i][2] !== 'Processing') continue;
+      try { confirmSession_(rows[i][1]); } catch (err) { console.error(rows[i][1], err); }
+    }
+  });
 }
 
 /* ---------- helpers ---------- */
